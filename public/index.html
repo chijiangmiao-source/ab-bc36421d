@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>野外实验站 · 离线记录</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header>
+    <h1>野外实验站 · 离线记录</h1>
+    <div id="fenceBadge" class="badge">未打开工作区</div>
+  </header>
+
+  <section id="gate" class="card">
+    <h2>打开 / 建立工作区</h2>
+    <p class="hint">每个浏览器标签页是一个“录入页面”，持有自己的纪元围栏。可在两个标签页打开同一工作区进行并发验证。</p>
+    <div class="row">
+      <input id="wsName" placeholder="工作区名称，如 station-a" />
+      <button id="btnOpen">打开</button>
+      <button id="btnCreate">建立新工作区</button>
+    </div>
+    <div id="gateMsg" class="msg"></div>
+  </section>
+
+  <main id="workspace" hidden>
+    <section class="card">
+      <h2>纪元与迁移</h2>
+      <div class="grid">
+        <div><span class="k">当前纪元</span><strong id="curEpoch">–</strong><small id="curVersion"></small></div>
+        <div><span class="k">迁移阶段</span><strong id="phase">空闲</strong></div>
+        <div><span class="k">候选纪元</span><strong id="candidate">–</strong></div>
+        <div><span class="k">封存状态</span><strong id="sealed">否</strong></div>
+      </div>
+      <div class="row">
+        <input id="targetVersion" type="number" min="2" placeholder="目标版本" />
+        <button id="btnMigrate">发起目标版本迁移</button>
+        <button id="btnRecover">按持久化阶段恢复 / 续用</button>
+        <button id="btnAbort">安全回收候选</button>
+      </div>
+      <div id="migMsg" class="msg"></div>
+    </section>
+
+    <section class="card">
+      <h2>持有围栏的页面</h2>
+      <table>
+        <thead><tr><th>页面</th><th>持有纪元</th><th>最近出现</th><th>失效状态</th></tr></thead>
+        <tbody id="pagesBody"></tbody>
+      </table>
+      <p class="hint">页面重开后会读取到当前（完整）纪元并刷新围栏；失效页面继续保存会被拒绝。</p>
+    </section>
+
+    <section class="card">
+      <h2>记录（仅当前完整纪元）</h2>
+      <div id="staleBanner" class="banner" hidden>
+        ⚠️ <span id="staleText"></span>
+        <button id="btnReload">重新载入</button>
+      </div>
+      <div class="row">
+        <input id="recText" placeholder="录入一条野外观察记录…" />
+        <button id="btnSave">保存记录</button>
+      </div>
+      <ul id="records"></ul>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>

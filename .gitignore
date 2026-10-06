@@ -13,3 +13,6 @@ __pycache__/
 .yarn-cache/
 *.pyc
 *.pyo
+
+# 本地运行的数据目录
+/.data/

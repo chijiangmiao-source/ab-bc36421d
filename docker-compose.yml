@@ -1,0 +1,34 @@
+services:
+  app:
+    build: .
+    image: field-station-epochs:latest
+    environment:
+      PORT: "8080"
+      DATA_DIR: /data
+      ALLOW_FAULT_INJECTION: "1"
+    ports:
+      - "8080:8080"
+    volumes:
+      - station-data:/data
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8080/healthz"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # 一次性验证服务：代码测试 + 构建检查 + API/HTTP 冒烟（含旧写拒绝、复制中断与发布崩溃恢复）。
+  # 运行：docker compose run --rm verify    （结束后自行退出，以退出码报告结果）
+  verify:
+    build: .
+    image: field-station-epochs:latest
+    depends_on:
+      app:
+        condition: service_healthy
+    environment:
+      APP_BASE_URL: "http://app:8080"
+      ALLOW_FAULT_INJECTION: "1"
+    entrypoint: ["sh", "scripts/verify.sh"]
+    restart: "no"
+
+volumes:
+  station-data:

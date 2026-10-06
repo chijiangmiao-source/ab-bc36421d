@@ -1,0 +1,17 @@
+{
+  "name": "field-station-epochs",
+  "version": "1.0.0",
+  "private": true,
+  "description": "野外实验站离线记录：纪元迁移、围栏与中断恢复",
+  "type": "module",
+  "scripts": {
+    "start": "node server/main.js",
+    "test": "node --test test/store.test.js",
+    "build": "node scripts/build-check.js",
+    "smoke": "node test/smoke.mjs",
+    "verify": "sh scripts/verify.sh"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
